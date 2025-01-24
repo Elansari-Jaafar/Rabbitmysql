@@ -1,0 +1,24 @@
+server:
+    port: 8082
+spring:
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+    exchange: user.exchange
+    queue: user.queue
+    routingkey: user.routing-key
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/consumerdb?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
