@@ -16,11 +16,10 @@ public class ConsumerService {
     
     private final Logger logger = LoggerFactory.getLogger(ConsumerService.class);
 
-    @RabbitListener(queues = "${spring.rabbitmq.queue}")
+    @RabbitListener(queues = "${spring.rabbitmq.template.default-receive-queue}")
     public void receivedMessage(User user){
-        User save = userRepository.save(user);
-        logger.info("persisted "+save);
-        logger.info("User recieved: "+ user);
+        userRepository.save(user);
+        logger.info("User received from the queue: " + user);
     }
     
 }

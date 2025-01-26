@@ -22,21 +22,21 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.username}")
     String username;
 
-    @Value("{spring.rabbitmq.password}")
+    @Value("${spring.rabbitmq.password}")
     String password;
 
     @Value("${spring.rabbitmq.queue}")
     String queue;
 
-    @Value("${spring.rabbitmq.exchange}")
+    @Value("${spring.rabbitmq.template.exchange}")
     String exchange;
 
-    @Value("${spring.rabbitmq.routingkey}")
-    String ROUTING_KEY;
+    @Value("${spring.rabbitmq.template.routing-key}")
+    String routingkey;
 
     @Bean
     public Queue queue() {
-        return new Queue(queue, false);
+        return new Queue(queue, true);
     }
 
     @Bean
@@ -58,8 +58,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    public Binding binding(Queue queue, TopicExchange exchange){
+        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
     }
 
     @Bean

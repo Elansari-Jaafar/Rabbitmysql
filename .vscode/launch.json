@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MicromessageproducerApplication<micromessageproducer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.jaafar.micromessageproducer.MicromessageproducerApplication",
+            "projectName": "micromessageproducer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=55490 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=micromessageproducer"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MicromessageconsummerApplication<micromessageconsummer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.jaafar.micromessageconsummer.MicromessageconsummerApplication",
+            "projectName": "micromessageconsummer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

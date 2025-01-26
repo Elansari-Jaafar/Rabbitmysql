@@ -6,9 +6,10 @@ spring:
     username: guest
     password: guest
     port: 5672
-    exchange: user.exchange
-    queue: user.queue
-    routingkey: user.routing-key
+    template:
+      exchange: user.exchange
+      routing-key: user.routing-key
+      default-receive-queue: user.queue
 
   datasource:
     url: jdbc:mysql://localhost:3306/consumerdb?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
@@ -19,6 +20,5 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
         format_sql: true

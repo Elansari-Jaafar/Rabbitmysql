@@ -6,6 +6,7 @@ spring:
         port: 5672
         username: guest
         password: guest
-        exchange: user.exchange
         queue: user.queue
-        routingkey: user.routing-key
+        template:
+            exchange: user.exchange
+            routing-key: user.routing-key

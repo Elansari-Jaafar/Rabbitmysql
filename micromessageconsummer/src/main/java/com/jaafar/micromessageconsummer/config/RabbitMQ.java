@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -14,11 +13,10 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.core.Binding;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 
 @Configuration
 public class RabbitMQ {
-
-
   @Value("${spring.rabbitmq.host}")
   String host;
 
@@ -28,10 +26,13 @@ public class RabbitMQ {
   @Value("${spring.rabbitmq.password}")
   String password;
 
-  @Value("${spring.rabbitmq.exchange}")
+  @Value("${spring.rabbitmq.template.default-receive-queue}")
+  String queue;
+
+  @Value("${spring.rabbitmq.template.exchange}")
   String exchange;
 
-  @Value("${spring.rabbitmq.routingKey}")
+  @Value("${spring.rabbitmq.template.routing-key}")
   String routingKey;
 
 
@@ -55,24 +56,19 @@ public class RabbitMQ {
      
   }
 
-   @Bean
-    DirectExchange userExchange() {
-        return new DirectExchange(exchange, true, false); // Durable, non-auto-delete
-    }
+  @Bean
+  public TopicExchange exchange() {
+      return new TopicExchange(exchange);
+  }
+
+  @Bean
+  public Queue queue() {
+      return new Queue(queue, true);
+  }
 
     @Bean
-    Queue queue() {
-        return new Queue("user.queue", true); // Durable queue
-    }
-
-    @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
+    public Binding binding(Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
-
-  
-
-
-
   
 }
